@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Downloading your PDF...</title>
+  <script>
+    // Get the ?file= parameter from the URL
+    const params = new URLSearchParams(window.location.search);
+    const fileLink = params.get("file");
+
+    // Replace this with your Heyflow link
+    const heyflowLink = "https://yourflow.heyflow.app";
+
+    if (fileLink) {
+      // Automatically download PDF
+      window.location.href = fileLink;
+
+      // After 4 seconds, redirect back to Heyflow
+      setTimeout(() => {
+        window.location.href = heyflowLink;
+      }, 4000);
+    } else {
+      document.body.innerHTML = "<h3>No file found. Please try again.</h3>";
+    }
+  </script>
+</head>
+<body>
+  <p>Your personalized PDF is downloading...</p>
+  <p>You'll be redirected back to the form shortly.</p>
+</body>
+</html>
