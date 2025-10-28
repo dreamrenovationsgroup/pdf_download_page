@@ -1,31 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Downloading your PDF...</title>
-  <script>
-    // Get the ?file= parameter from the URL
-    const params = new URLSearchParams(window.location.search);
-    const fileLink = params.get("file");
-
-    // Replace this with your Heyflow link
-    const heyflowLink = "https://app.heyflow.com/flow/wyu4HqQE0DMZaFIZC2QG/build/variant/WOJCFqABFRWCkaTsArwY/pages?page=0&blockPath=0";
-
-    if (fileLink) {
-      // Automatically download PDF
-      window.location.href = fileLink;
-
-      // After 4 seconds, redirect back to Heyflow
-      setTimeout(() => {
-        window.location.href = heyflowLink;
-      }, 4000);
-    } else {
-      document.body.innerHTML = "<h3>No file found. Please try again.</h3>";
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your PDF Download</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f8f9fa;
+      color: #333;
     }
-  </script>
+    .btn {
+      background: #007bff;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <p>Your personalized PDF is downloading...</p>
-  <p>You'll be redirected back to the form shortly.</p>
+  <h1>Your PDF is ready 🎉</h1>
+  <p>Click below to download your personalized file.</p>
+  <a id="downloadLink" class="btn" href="#">Download PDF</a>
+
+  <script>
+    // Extract "file" parameter from URL
+    const params = new URLSearchParams(window.location.search);
+    const fileUrl = decodeURIComponent(params.get("file"));
+    const downloadLink = document.getElementById("downloadLink");
+
+    if (fileUrl) {
+      downloadLink.href = fileUrl;
+      downloadLink.target = "_blank";
+    } else {
+      document.body.innerHTML = "<h2>No file specified.</h2>";
+    }
+  </script>
 </body>
 </html>
