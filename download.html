@@ -12,7 +12,7 @@
     async function loadPDF() {
       try {
         // Fetch the JSON data from GitHub
-        const response = await fetch('https://raw.githubusercontent.com/dreamrenovationsgroup/pdf_download_page/main/data.json');
+        const response = await fetch('https://raw.githubusercontent.com/dreamrenovationsgroup/pdf_download_page/refs/heads/main/data.json');
         const data = await response.json();
 
         const container = document.getElementById('downloadContainer');
@@ -26,7 +26,7 @@
           const a = document.createElement('a');
           a.href = data[submissionId];
           a.textContent = "Download Your PDF";
-          a.download = "YourPDF.pdf"; // Optional
+          //a.download = "YourPDF.pdf"; // Optional
           a.target = "_blank";
           container.appendChild(a);
         } else {
