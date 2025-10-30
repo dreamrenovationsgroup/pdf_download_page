@@ -24,11 +24,11 @@
 
         if (submissionId && data[submissionId]) {
           const a = document.createElement('a');
-          a.href = data[submissionId];
-          a.textContent = "Download Your PDF";
-          //a.download = "YourPDF.pdf"; // Optional
-          a.target = "_blank";
+          a.href = data[submissionId].url;       // URL
+          a.textContent = `Download: ${data[submissionId].name}`; // dynamic PDF name
+          a.download = data[submissionId].name;  // optional: sets filename for download
           container.appendChild(a);
+
         } else {
           // Fallback: show all PDFs if no submission ID provided
           container.innerHTML = "<p>Submission ID not found. Available PDFs:</p>";
