@@ -1,53 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Download Your PDF</title>
+  <title>Download PDFs</title>
 </head>
 <body>
-  <h2>Download Your PDF</h2>
-
+  <h2>Available PDFs for Download</h2>
   <div id="downloadContainer">Loading...</div>
 
   <script>
     async function loadPDF() {
       try {
-        // Fetch the JSON data from GitHub
         const response = await fetch('https://raw.githubusercontent.com/dreamrenovationsgroup/pdf_download_page/main/data.json');
         const data = await response.json();
 
         const container = document.getElementById('downloadContainer');
         container.innerHTML = '';
 
-        // Get submission ID from URL query string
-        const params = new URLSearchParams(window.location.search);
-        const submissionId = params.get('submission_id');
+        // Convert data object into array of entries
+        const pdfEntries = Object.entries(data);
 
-        if (submissionId && data[submissionId]) {
-          // Show the PDF for this submission
+        // Sort entries: newest first (assuming newest are added last in data.json)
+        pdfEntries.reverse();
+
+        // Show all PDFs
+        const ul = document.createElement('ul');
+        pdfEntries.forEach(([id, pdf]) => {
+          const li = document.createElement('li');
           const a = document.createElement('a');
-          a.href = data[submissionId].url;
-          a.textContent = `Download: ${data[submissionId].name}`;
-          a.download = data[submissionId].name;
+          a.href = pdf.url;
+          a.textContent = pdf.name;       // show PDF name
+          a.download = pdf.name;
           a.target = "_blank";
-          container.appendChild(a);
-        } else {
-          // Show all PDFs if submission ID not found
-          container.innerHTML = "<p>Submission ID not found. Available PDFs:</p>";
-          const ul = document.createElement('ul');
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
 
-          Object.keys(data).forEach(id => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = data[id].url;
-            a.textContent = `Download: ${data[id].name}`;
-            a.download = data[id].name;
-            a.target = "_blank";
-            li.appendChild(a);
-            ul.appendChild(li);
-          });
-
-          container.appendChild(ul);
-        }
+        container.appendChild(ul);
 
       } catch (err) {
         document.getElementById('downloadContainer').textContent = "Error loading PDFs.";
